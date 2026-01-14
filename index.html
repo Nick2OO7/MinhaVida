@@ -64,6 +64,7 @@
         <p class="mb-6">Crie uma carta romântica personalizada para o amor da sua vida!</p>
         <button onclick="showStep(1)" class="bg-pink-500 text-white px-6 py-3 rounded-full hover:bg-pink-600 transition">Começar ❤️</button>
     </div>
+
     <div id="step1" class="step bg-white bg-opacity-90 rounded-2xl p-6 shadow-lg max-w-lg w-full fade-in">
         <h2 class="text-2xl romantic-text text-pink-600 mb-4">Dados Principais</h2>
         <input id="nomeQuemAma" type="text" placeholder="Nome de quem ama" class="w-full p-2 border rounded mb-4" value="">
@@ -71,6 +72,7 @@
         <input id="apelido" type="text" placeholder="Apelido carinhoso 💕" class="w-full p-2 border rounded mb-4" value="">
         <button onclick="nextStep(1)" class="bg-pink-500 text-white px-6 py-3 rounded-full hover:bg-pink-600 transition">Próximo 💕</button>
     </div>
+
     <div id="step2" class="step bg-white bg-opacity-90 rounded-2xl p-6 shadow-lg max-w-lg w-full fade-in">
         <h2 class="text-2xl romantic-text text-pink-600 mb-4">Mensagem Romântica</h2>
         <textarea id="mensagem" placeholder="Digite sua mensagem" class="w-full p-2 border rounded mb-4" rows="3"></textarea>
@@ -138,7 +140,7 @@
                     if (key === 'qualidades') {
                         data[key].forEach(q => addQualidadeToList(q));
                     } else if (key === 'memorias') {
-                        data[key].forEach(mem => addMemoriaToList(mem));
+                        data[key].forEach((mem, index) => addMemoriaToList(mem, index));
                     }
                 } else {
                     const el = document.getElementById(key);
@@ -211,20 +213,21 @@
                 reader.onload = function(e) {
                     const mem = { foto: e.target.result, data: '', descricao: '' };
                     data.memorias.push(mem);
-                    addMemoriaToList(mem);
+                    addMemoriaToList(mem, data.memorias.length - 1);
                     localStorage.setItem('cartaData', JSON.stringify(data));
                 };
                 reader.readAsDataURL(file);
             }
         }
 
-        function addMemoriaToList(mem) {
+        function addMemoriaToList(mem, index) {
             const div = document.createElement('div');
-            const index = data.memorias.length - 1;
+            div.id = `memoria-${index}`;
             div.innerHTML = `
                 <img src="${mem.foto}" alt="Memória" class="w-20 h-20 rounded inline mr-2">
-                <input type="date" onchange="updateMemoria(this, 'data', ${index})" class="ml-2 p-1 border rounded">
-                <input type="text" placeholder="O que aconteceu?" onchange="updateMemoria(this, 'descricao', ${index})" class="ml-2 p-1 border rounded">
+                <input type="date" value="${mem.data}" onchange="updateMemoria(this, 'data', ${index})" class="ml-2 p-1 border rounded">
+                <input type="text" placeholder="O que aconteceu?" value="${mem.descricao}" onchange="updateMemoria(this, 'descricao', ${index})" class="ml-2 p-1 border rounded">
+                <button onclick="removeMemoria(${index})" class="ml-2 bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Excluir</button>
             `;
             document.getElementById('memoriasList').appendChild(div);
         }
@@ -232,6 +235,14 @@
         function updateMemoria(el, field, index) {
             data.memorias[index][field] = el.value;
             localStorage.setItem('cartaData', JSON.stringify(data));
+        }
+
+        function removeMemoria(index) {
+            data.memorias.splice(index, 1);
+            localStorage.setItem('cartaData', JSON.stringify(data));
+            // Recriar a lista para atualizar índices
+            document.getElementById('memoriasList').innerHTML = '';
+            data.memorias.forEach((mem, i) => addMemoriaToList(mem, i));
         }
 
         function generatePreview() {
