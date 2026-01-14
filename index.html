@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta do Nosso Amor 💌</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffe4ef 0%, #ff5fa2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+        .heart-float {
+            position: absolute;
+            animation: float 3s ease-in-out infinite;
+            font-size: 2rem;
+            color: #ff5fa2;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .romantic-text {
+            font-family: 'Pacifico', cursive;
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+    <div class="hearts-bg">
+        <div class="heart-float" style="left: 10%; top: 20%;">💖</div>
+        <div class="heart-float" style="left: 20%; top: 50%; animation-delay: 1s;">💕</div>
+        <div class="heart-float" style="left: 70%; top: 30%; animation-delay: 2s;">❤️</div>
+        <div class="heart-float" style="left: 80%; top: 70%; animation-delay: 0.5s;">💗</div>
+        <div class="heart-float" style="left: 50%; top: 10%; animation-delay: 1.5s;">💓</div>
+    </div>
+
+    <div id="home" class="step active text-center bg-white bg-opacity-90 rounded-2xl p-8 shadow-lg max-w-md fade-in">
+        <h1 class="text-3xl romantic-text text-pink-600 mb-4">Carta do Nosso Amor 💌</h1>
+        <p class="mb-6">Crie uma carta romântica personalizada para o amor da sua vida!</p>
+        <button onclick="showStep(1)" class="bg-pink-500 text-white px-6 py-3 rounded-full hover:bg-pink-600 transition">Começar ❤️</button>
+    </div>
+
+    <div id="step1" class="step bg-white bg-opacity-90 rounded-2xl p-6 shadow-lg max-w-lg w-full fade-in">
+        <h2 class="text-2xl romantic-text text-pink-600 mb-4">Dados Principais</h2>
+        <input id="nomeQuemAma" type="text" placeholder="Nome de quem ama" class="w-full p-2 border rounded mb-4" value="">
+        <input id="nomeNamorada" type="text" placeholder="Nome da namorada" class="w-full p-2 border rounded mb-4" value="">
+        <input id="apelido" type="text" placeholder="Apelido carinhoso 💕" class="w-full p-2 border rounded mb-4" value="">
+        <button onclick="nextStep(1)" class="bg-pink-500 text-white px-6 py-3 rounded-full hover:bg-pink-600 transition">Próximo 💕</button>
+    </div>
+
+    <div id="step2" class="step bg-white bg-opacity-90 rounded-2xl p-6 shadow-lg max-w-lg w-full fade-in">
+        <h2 class="text-2xl romantic-text text-pink-600 mb-4">Mensagem Romântica</h2>
+        <textarea id="mensagem" placeholder="Digite sua mensagem" class="w-full p-2 border rounded mb-4" rows="3"></textarea>
+        <button onclick="generateInspiration()" class="bg-pink-400 text-white px-4 py-2 rounded mb-4">Precisa de inspiração?</button>
+        <button onclick="nextStep(2)" class="bg-pink-500 text-white px-6 py-3 rounded-full hover:bg-pink-600 transition">Próximo 💕</button>
+    </div>
+
+    <div id="step3" class="step bg-white bg-opacity-90 rounded-2xl p-6 shadow-lg max-w-lg w-full fade-in">
+        <h2 class="text-2xl romantic-text text-pink-600 mb-4">O que você mais ama nela</h2>
+        <textarea id="oQueAma" placeholder="Texto livre (150-300 caracteres)" class="w-full p-2 border rounded mb-4" rows="3" maxlength="300"></textarea>
+        <button onclick="nextStep(3)" class="bg-pink-500 text-white px-6 py-3 rounded-full hover:bg-pink-600 transition">Próximo 💕</button>
+    </div>
+
+    <div id="step4" class="step bg-white bg-opacity-90 rounded-2xl p-6 shadow-lg max-w-lg w-full fade-in">
+        <h2 class="text-2xl romantic-text text-pink-600 mb-4">História do Casal</h2>
+        <textarea id="historia" placeholder="Como se conheceram, momentos marcantes" class="w-full p-2 border rounded mb-4" rows="3"></textarea>
+        <button onclick="nextStep(4)" class="bg-pink-500 text-white px-6 py-3 rounded-full hover:bg-pink-600 transition">Próximo 💕</button>
+    </div>
+
+    <div id="step5" class="step bg-white bg-opacity-90 rounded-2xl p-6 shadow-lg max-w-lg w-full fade-in">
+        <h2 class="text-2xl romantic-text text-pink-600 mb-4">Sonhos Juntos</h2>
+        <textarea id="sonhos" placeholder="Casa, viagens, família, planos 💭" class="w-full p-2 border rounded mb-4" rows="3"></textarea>
+        <button onclick="nextStep(5)" class="bg-pink-500 text-white px-6 py-3 rounded-full hover:bg-pink-600 transition">Próximo 💕</button>
+    </div>
+
+    <div id="step6" class="step bg-white bg-opacity-90 rounded-2xl p-6 shadow-lg max-w-lg w-full fade-in">
+        <h2 class="text-2xl romantic-text text-pink-600 mb-4">Qualidades Dela</h2>
+        <input id="qualidadeInput" type="text" placeholder="Adicione uma qualidade (ex: carinhosa)" class="w-full p-2 border rounded mb-2" onkeydown="addQualidade(event)">
+        <ul id="qualidadesList" class="mb-4"></ul>
+        <button onclick="nextStep(6)" class="bg-pink-500 text-white px-6 py-3 rounded-full hover:bg-pink-600 transition">Próximo 💕</button>
+    </div>
+
+    <div id="step7" class="step bg-white bg-opacity-90 rounded-2xl p-6 shadow-lg max-w-lg w-full fade-in">
+        <h2 class="text-2xl romantic-text text-pink-600 mb-4">Memórias (Fotos)</h2>
+        <input id="fotoInput" type="file" accept="image/*" onchange="addMemoria()" class="mb-4">
+        <div id="memoriasList" class="mb-4"></div>
+        <button onclick="nextStep(7)" class="bg-pink-500 text-white px-6 py-3 rounded-full hover:bg-pink-600 transition">Próximo 💕</button>
+    </div>
+
+    <div id="preview" class="step bg-white bg-opacity-90 rounded-2xl p-6 shadow-lg max-w-2xl w-full fade-in">
+        <h2 class="text-2xl romantic-text text-pink-600 mb-4">Pré-visualização da Carta 💌</h2>
+        <div id="previewContent" class="border-2 border-pink-300 p-4 rounded mb-4"></div>
+        <button onclick="showStep(7)" class="bg-gray-400 text-white px-4 py-2 rounded mr-2">Editar</button>
+        <button onclick="generateLetter()" class="bg-pink-500 text-white px-6 py-3 rounded-full hover:bg-pink-600 transition">Finalizar e Gerar Carta ❤️</button>
+    </div>
+
+    <div id="letter" class="step bg-pink-100 border-4 border-pink-500 rounded-2xl p-8 shadow-2xl max-w-4xl w-full text-center fade-in">
+        <h1 class="text-4xl romantic-text text-pink-600 mb-6">Carta do Nosso Amor 💖</h1>
+        <div id="letterContent"></div>
+        <div class="mt-6">
+            <button onclick="shareLetter()" class="bg-pink-500 text-white px-4 py-2 rounded mr-2">Compartilhar Link</button>
+            <button onclick="window.print()" class="bg-pink-500 text-white px-4 py-2 rounded">Imprimir PDF</button>
+        </div>
+    </div>
+
+    <script>
+        let data = JSON.parse(localStorage.getItem('cartaData')) || {
+            nomeQuemAma: '', nomeNamorada: '', apelido: '', mensagem: '', oQueAma: '', historia: '', sonhos: '', qualidades: [], memorias: []
+        };
+        let currentStep = 0;
+
+        function loadData() {
+            Object.keys(data).forEach(key => {
+                if (Array.isArray(data[key])) {
+                    if (key === 'qualidades') {
+                        data[key].forEach(q => addQualidadeToList(q));
+                    } else if (key === 'memorias') {
+                        data[key].forEach(mem => addMemoriaToList(mem));
+                    }
+                } else {
+                    const el = document.getElementById(key);
+                    if (el) el.value = data[key];
+                }
+            });
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById(step === 0 ? 'home' : `step${step}`).classList.add('active');
+            currentStep = step;
+            loadData();
+        }
+
+        function nextStep(step) {
+            if (step === 1) {
+                data.nomeQuemAma = document.getElementById('nomeQuemAma').value;
+                data.nomeNamorada = document.getElementById('nomeNamorada').value;
+                data.apelido = document.getElementById('apelido').value;
+            } else if (step === 2) {
+                data.mensagem = document.getElementById('mensagem').value;
+            } else if (step === 3) {
+                data.oQueAma = document.getElementById('oQueAma').value;
+            } else if (step === 4) {
+                data.historia = document.getElementById('historia').value;
+            } else if (step === 5) {
+                data.sonhos = document.getElementById('sonhos').value;
+            }
+            localStorage.setItem('cartaData', JSON.stringify(data));
+            if (step === 7) {
+                generatePreview();
+                showSection('preview');
+            } else {
+                showStep(step + 1);
+            }
+        }
+
+        function generateInspiration() {
+            const frases = [
+                'Você é a luz dos meus dias, meu amor eterno.',
+                'Cada momento ao seu lado é um sonho realizado.',
+                'Te amo mais que palavras podem dizer.'
+            ];
+            document.getElementById('mensagem').value = frases[Math.floor(Math.random() * frases.length)];
+        }
+
+        function addQualidade(event) {
+            if (event.key === 'Enter') {
+                const val = event.target.value.trim();
+                if (val) {
+                    data.qualidades.push(val);
+                    addQualidadeToList(val);
+                    event.target.value = '';
+                    localStorage.setItem('cartaData', JSON.stringify(data));
+                }
+            }
+        }
+
+        function addQualidadeToList(q) {
+            const li = document.createElement('li');
+            li.textContent = '• ' + q;
+            document.getElementById('qualidadesList').appendChild(li);
+        }
+
+        function addMemoria() {
+            const file = document.getElementById('fotoInput').files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const mem = { foto: e.target.result, data: '', descricao: '' };
+                    data.memorias.push(mem);
+                    addMemoriaToList(mem);
+                    localStorage.setItem('cartaData', JSON.stringify(data));
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function addMemoriaToList(mem) {
+            const div = document.createElement('div');
+            const index = data.memorias.length - 1;
+            div.innerHTML = `
+                <img src="${mem.foto}" alt="Memória" class="w-20 h-20 rounded inline mr-2">
+                <input type="date" onchange="updateMemoria(this, 'data', ${index})" class="ml-2 p-1 border rounded">
+                <input type="text" placeholder="O que aconteceu?" onchange="updateMemoria(this, 'descricao', ${index})" class="ml-2 p-1 border rounded">
+            `;
+            document.getElementById('memoriasList').appendChild(div);
+        }
+
+        function updateMemoria(el, field, index) {
+            data.memorias[index][field] = el.value;
+            localStorage.setItem('cartaData', JSON.stringify(data));
+        }
+
+        function generatePreview() {
+            const content = `
+                <p><strong>Para ${data.nomeNamorada} (${data.apelido})</strong></p>
+                <p>${data.mensagem}</p>
+                <p><strong>O que eu amo em você:</strong> ${data.oQueAma}</p>
+                <p><strong>Nossa história:</strong> ${data.historia}</p>
+                <p><strong>Sonhos juntos:</strong> ${data.sonhos}</p>
+                <p><strong>Qualidades:</strong> ${data.qualidades.join(', ')}</p>
+                <p><strong>Memórias:</strong></p>
+                ${data.memorias.map(mem => `<div><img src="${mem.foto}" class="w-16 h-16 rounded inline mr-2">${mem.data}: ${mem.descricao}</div>`).join('')}
+            `;
+            document.getElementById('previewContent').innerHTML = content;
+        }
+
+        function generateLetter() {
+            generatePreview();
+            document.getElementById('letterContent').innerHTML = document.getElementById('previewContent').innerHTML;
+            showSection('letter');
+            const audio = new Audio('musica-romantica.mp3');
+            audio.play();
+        }
+
+        function shareLetter() {
+            navigator.share({ title: 'Carta Romântica', url: window.location.href + '?data=' + encodeURIComponent(JSON.stringify(data)) });
+        }
+
+        function showSection(id) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+    </script>
+</body>
+</html>
