@@ -207,6 +207,10 @@
         }
 
         function addMemoria() {
+            if (data.memorias.length >= 15) {
+                alert('Você pode adicionar no máximo 15 fotos.');
+                return;
+            }
             const file = document.getElementById('fotoInput').files[0];
             if (file) {
                 const reader = new FileReader();
